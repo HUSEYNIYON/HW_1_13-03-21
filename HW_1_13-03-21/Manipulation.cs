@@ -12,14 +12,24 @@ namespace HW_1_13_03_21
         public string[] FormatByInc(string[] array) => array.OrderBy(t => t.Length).ToArray();
         public int[] SumAndCount(int[] arrays)
         {
-            int count = arrays.Where(t => t > 0).Count();
-            int sum = arrays.Where(t => t < 0).Sum();
-            int[] arr = { count, sum };
+            int[] arr = new int[0];
+            if (arrays.Length !=0 )
+            {
+                if(arrays.Any(x => x > 0 || x < 0))
+                {
+                    Array.Resize(ref arr, 2);
+                    arr[0] = arrays.Where(x => x > 0).Count();
+                    arr[1] = arrays.Where(x => x < 0).Sum();
+                }
+            }
             return arr;
         }
-        public int[] GetUniqNumber(int[] array)
+        public int GetUniqNumber(int[] array)
         {
-            return (array.GroupBy(i => i).Where(i => i.Count() == 1).Select(i => i.Key)).ToArray();
+            var a = array.GroupBy(g => g).Where(g => g.Count() < 2).Select(g => g.Key).ToArray();
+            return a[0];
         }
+            
+            
     }
 }
